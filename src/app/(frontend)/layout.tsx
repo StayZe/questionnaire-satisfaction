@@ -17,8 +17,8 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="fr" className={moreSugar.variable}>
-      <body>
+    <html lang="fr" className={moreSugar.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <main>{children}</main>
       </body>
     </html>
