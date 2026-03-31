@@ -1,16 +1,23 @@
 import React from 'react'
+import localFont from 'next/font/local'
 import './styles.css'
 
+const moreSugar = localFont({
+  src: '../../../public/fonts/MoreSugar-Regular.ttf',
+  variable: '--font-more-sugar',
+  display: 'swap',
+})
+
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: "Questionnaire de satisfaction pour L'échequier",
+  title: "Questionnaire - L'échequier",
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en">
+    <html lang="fr" className={moreSugar.variable}>
       <body>
         <main>{children}</main>
       </body>

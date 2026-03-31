@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    reponses: Reponse;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,13 +79,14 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    reponses: ReponsesSelect<false> | ReponsesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {};
@@ -122,7 +124,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +149,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -163,10 +165,35 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reponses".
+ */
+export interface Reponse {
+  id: number;
+  accueil?: string | null;
+  attente?: string | null;
+  serviceGlobal?: string | null;
+  qualitePlats?: number | null;
+  portions?: ('Oui' | 'Non' | 'Autre') | null;
+  portionsAutre?: string | null;
+  prix?: ("Je ne m'attendais pas à de si petits prix 😅" | 'Raisonnable' | 'Cher' | 'Hors de prix') | null;
+  propreteSalle?: number | null;
+  propreteSanitaires?: number | null;
+  equipementEnfants?: string | null;
+  plusApprecie?: string | null;
+  amelioration?: string | null;
+  frequence?: ('Première fois 😊' | 'Parfois' | 'De temps en temps' | 'Souvent' | 'Très souvent') | null;
+  retourner?: ('Oui, avec plaisir' | 'Peut-être' | 'Non') | null;
+  nom?: string | null;
+  prenom?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +210,24 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'reponses';
+        value: number | Reponse;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +237,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +260,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -274,6 +305,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reponses_select".
+ */
+export interface ReponsesSelect<T extends boolean = true> {
+  accueil?: T;
+  attente?: T;
+  serviceGlobal?: T;
+  qualitePlats?: T;
+  portions?: T;
+  portionsAutre?: T;
+  prix?: T;
+  propreteSalle?: T;
+  propreteSanitaires?: T;
+  equipementEnfants?: T;
+  plusApprecie?: T;
+  amelioration?: T;
+  frequence?: T;
+  retourner?: T;
+  nom?: T;
+  prenom?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
